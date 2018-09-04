@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.collections.FXCollections?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.controller.MainController">
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+    </rowConstraints>
+    <children>
+        <TabPane prefHeight="584.0" prefWidth="846.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="json格式转换">
+                    <content>
+                        <Pane prefHeight="586.0" prefWidth="874.0">
+                            <children>
+                                <Button fx:id="startChange" layoutX="396.0" layoutY="255.0" mnemonicParsing="false" onAction="#parseJsonAct" text="》》》"/>
+                                <TextArea fx:id="oldText" layoutX="25.0" layoutY="15.0" prefHeight="523.0" prefWidth="360.0" wrapText="true"/>
+                                <TextArea fx:id="newText" layoutX="460.0" layoutY="17.0" prefHeight="521.0" prefWidth="360.0" wrapText="true"/>
+                            </children>
+                        </Pane>
+                    </content>
+                </Tab>
+                <Tab fx:id="createCode" onSelectionChanged="#loadProperties" text="代码生成">
+                    <content>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="40.0" layoutY="80.0" text="用  户  名"/>
+                                <TextField fx:id="authorTf" layoutX="120.0" layoutY="76.0" prefHeight="23.0" prefWidth="168.0"/>
+                                <Label layoutX="40.0" layoutY="130.0" text="输出路径"/>
+                                <TextField fx:id="filePathTf" layoutX="120.0" layoutY="126.0" prefHeight="23.0" prefWidth="220.0"/>
+                                <Button layoutX="350.0" layoutY="126.0" mnemonicParsing="false" onAction="#chooseFolderAct" text="选择"/>
+                                <Label layoutX="40.0" layoutY="180.0" text="数据库类型"/>
+                                <TextField fx:id="dbDriver" layoutX="120.0" layoutY="176.0" prefHeight="23.0" prefWidth="220.0"
+                                           text="oracle.jdbc.driver.OracleDriver"/>
+                                <Button fx:id="changeDbType" layoutX="350.0" layoutY="176.0" mnemonicParsing="false" onAction="#changeDriver" text="更改"/>
+                                <Label layoutX="40.0" layoutY="230.0" text="数据库URL"/>
+                                <TextField fx:id="dbUrl" layoutX="120.0" layoutY="226.0" prefHeight="23.0" prefWidth="274.0" text="127.0.0.1:1521:tmis"/>
+                                <Label layoutX="40.0" layoutY="280.0" text="数据库账号"/>
+                                <TextField fx:id="dbName" layoutX="120.0" layoutY="276.0" prefHeight="23.0" prefWidth="168.0" text="gtmis_hy"/>
+                                <Label layoutX="40.0" layoutY="330.0" text="数据库密码"/>
+                                <TextField fx:id="dbPs" layoutX="120.0" layoutY="326.0" prefHeight="23.0" prefWidth="168.0" text="gtmis_hy"/>
+                                <Label layoutX="40.0" layoutY="380.0" text="注释类型"/>
+                                <ChoiceBox fx:id="annotationType" layoutX="120.0" layoutY="376.0" prefHeight="23.0" prefWidth="165.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="普通"/>
+                                            <String fx:value="Swagger2"/>
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="Swagger2"/>
+                                    </value>
+                                </ChoiceBox>
+                                <Button fx:id="conBut" layoutX="100.0" layoutY="436.0" mnemonicParsing="false" onAction="#conDataBaseAct" text="连接数据库"/>
+                                <Label fx:id="conState" layoutX="200.0" layoutY="441.0" text="连接状态：未连接"/>
+                                <CheckBox fx:id="controllerBox" layoutX="408.0" layoutY="21.0" mnemonicParsing="false" text="controller"/>
+                                <CheckBox fx:id="serviceBox" layoutX="534.0" layoutY="21.0" mnemonicParsing="false" text="service"/>
+                                <CheckBox fx:id="daoBox" layoutX="653.0" layoutY="21.0" mnemonicParsing="false" text="dao"/>
+                                <CheckBox fx:id="modelBox" layoutX="750.0" layoutY="21.0" mnemonicParsing="false" text="model"/>
+                                <Label layoutX="410.0" layoutY="57.0" text="表名(回车查询)"/>
+                                <TextField fx:id="tableNameTf" layoutX="500.0" layoutY="52.0" onAction="#changeTableName" prefHeight="23.0" prefWidth="220.0"/>
+                                <Button layoutX="740.0" layoutY="52.0" mnemonicParsing="false" onAction="#createCode" text="生成代码"/>
+                                <Label layoutX="419.0" layoutY="319.0" text="已选"/>
+                                <ListView fx:id="tableNameLv1" layoutX="417.0" layoutY="110.0" onMouseClicked="#clickLv1" prefHeight="200.0" prefWidth="395.0"/>
+                                <Label layoutX="419.0" layoutY="86.0" text="待选"/>
+                                <ListView fx:id="tableNameLv2" layoutX="417.0" layoutY="339.0" onMouseClicked="#clickLv2" prefHeight="200.0" prefWidth="395.0"/>
+                            </children>
+                        </Pane>
+                    </content>
+                </Tab>
+                <Tab text="SQL转换(insert)">
+                    <content>
+                        <Pane fx:id="sqlPane1" prefHeight="586.0" prefWidth="874.0">
+                            <children>
+                                <Label layoutX="164.0" layoutY="14.0" text="Oracle"/>
+                                <TextArea fx:id="oracleText" layoutX="25.0" layoutY="35.0" prefHeight="503.0" prefWidth="360.0" wrapText="true"/>
+                                <Button fx:id="toMySQL" layoutX="397.0" layoutY="220.0" mnemonicParsing="false" onAction="#toMysql" text="》》》"/>
+                                <Label layoutX="392.0" layoutY="251.0" text="------------"/>
+                                <Button fx:id="toOracle" layoutX="397.0" layoutY="275.0" mnemonicParsing="false" onAction="#toOracle" text="《《《"/>
+                                <Label layoutX="619.0" layoutY="14.0" text="MySQL"/>
+                                <TextArea fx:id="mysqlText" layoutX="460.0" layoutY="36.0" prefHeight="502.0" prefWidth="360.0" wrapText="true"/>
+                            </children>
+                        </Pane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</GridPane>
