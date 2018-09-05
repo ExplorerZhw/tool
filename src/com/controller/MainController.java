@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.bean.TableModel;
 import com.service.TabOneService;
 import com.service.TabThreeService;
 import com.service.TabTwoService;
@@ -9,16 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -175,7 +173,7 @@ public class MainController {
     }
 
     /*
-     * 切换数据库类型按钮
+     * 生成Java类
      */
     @FXML
     public void createCode(ActionEvent event) {
@@ -217,6 +215,9 @@ public class MainController {
         }
     }
 
+    /*
+     * 依据输入内容查询表名
+     */
     @FXML
     public void changeTableName(ActionEvent event) {
         String tableName = tableNameTf.getText();
@@ -230,6 +231,9 @@ public class MainController {
         tableNameLv1.setItems(list); //tableview添加list
     }
 
+    /*
+     * 点击待选区内容事件
+     */
     @FXML
     public void clickLv1(Event event) {
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -244,6 +248,9 @@ public class MainController {
         }
     }
 
+    /*
+     * 点击已选区内容事件
+     */
     @FXML
     public void clickLv2(Event event) {
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -264,6 +271,9 @@ public class MainController {
         }
     }
 
+    /*
+     * insert MySQL转Oracle
+     */
     @FXML
     public void toOracle(ActionEvent event) {
         String mysql = mysqlText.getText();
@@ -271,6 +281,9 @@ public class MainController {
         oracleText.setText(oracle);
     }
 
+    /*
+     * insert Oracle转MySQL
+     */
     @FXML
     public void toMysql(ActionEvent event) {
         String oracle = oracleText.getText();
