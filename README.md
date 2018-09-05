@@ -1,0 +1,3 @@
+# tool
+这个是使用JavaFX来完成的一个桌面可执行jar,主要功能是为使用者提供一些工作需要的工具（现包括json格式化、数据表转Java类、Oracle和MySQL的insert语句互转），
+Win和Linux已验证均可正常使用；
