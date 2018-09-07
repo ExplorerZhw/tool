@@ -65,16 +65,16 @@ public class MainController {
     private TextArea oracleText;
     @FXML
     private TextArea mysqlText;
-    @FXML
-    private Tab changeSql;
 
     public FrameUtil frameUtil = new FrameUtil();
     public ConfigUtil configUtil = new ConfigUtil();
     public CodeUtil codeUtil;
     public FileUtil fileUtil = new FileUtil();
-    public static final String SPLIT = "---------";
     private Set<String> selectedNameSet = new HashSet<>();
 
+    /*
+     * 格式化json
+     */
     @FXML
     public void parseJsonAct(ActionEvent event) {
         String oldStr = oldText.getText();
@@ -106,15 +106,13 @@ public class MainController {
      */
     @FXML
     public void conDataBaseAct(ActionEvent event) {
-        String state = "未连接";
         String driverClass = dbDriver.getText();
         String url = dbUrl.getText();
         String name = dbName.getText();
         String pw = dbPs.getText();
         codeUtil = new TabTwoService().connectDb(driverClass, url, name, pw);
         if (codeUtil != null) {
-            state = "连接";
-            conState.setText("连接状态：" + state);
+            conState.setText("连接状态：连接");
             String path = filePathTf.getText();
             Pattern pattern = Pattern.compile("\\d+$");
             Matcher matcher = pattern.matcher(path);
@@ -132,7 +130,7 @@ public class MainController {
     }
 
     /*
-     * 加载数据库连接属性
+     * 加载配置文件
      */
     @FXML
     public void loadProperties() {
@@ -154,19 +152,20 @@ public class MainController {
     }
 
     /*
-     * 切换数据库类型按钮
+     * 切换数据库类型
      */
     @FXML
     public void changeDriver(ActionEvent event) {
         String oracleDriver = "oracle.jdbc.driver.OracleDriver";
         String mysqlDriver = "com.mysql.jdbc.Driver";
         String driver;
-        int dbType = 0;
+        int dbType;
         if (dbDriver.getText() != null && dbDriver.getText().contains("oracle")) {
             driver = mysqlDriver;
             dbType = 1;
         } else {
             driver = oracleDriver;
+            dbType = 0;
         }
         dbUrl.setText(configUtil.getUrl(dbType));
         dbDriver.setText(driver);
@@ -192,6 +191,10 @@ public class MainController {
         }
         if (classTypes.size() < 1) {
             frameUtil.alertInfo("", "请选择至少一种JAVA CLASS");
+            return;
+        }
+        if (selectedNameSet.size() < 1) {
+            frameUtil.alertInfo("", "请选择至少一个数据表");
             return;
         }
         String authorStr = authorTf.getText();
