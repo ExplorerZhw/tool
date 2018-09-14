@@ -42,7 +42,7 @@ public class TabTwoService {
     }
 
     /*
-     * 连接数据库
+     * 生成代码文件
      */
     public boolean createCode(CodeUtil codeUtil, Set<String> selectedNames, Set<Integer> classTypes, String author, int annotationType, String path) {
         boolean isCreated = false;

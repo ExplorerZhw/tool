@@ -155,6 +155,7 @@ public class CodeUtil {
     public void generateController() {
         try {
             className = toJavaClassName(tableName);
+            String fieldName = toJavaFieldName(tableName);
             Util util = new Util();
             // 生成头部信息
             String content = "";
@@ -167,6 +168,8 @@ public class CodeUtil {
             content += "import javax.servlet.http.HttpServletRequest;" + newLine;
             content += "import javax.servlet.http.HttpServletResponse;" + newLine;
             content += newLine;
+            content += "import java.util.List;" + newLine;
+            content += newLine;
             content += "/**" + newLine;
             content += " * Created by " + author + " on " + util.formatDate(new Date(), util.FORMAT_FULL) + "." + newLine;
             content += " * " + comments.get(tableName) + newLine;
@@ -176,8 +179,10 @@ public class CodeUtil {
                 content += "@RequestMapping(value = \"/pages/" + className + "\")" + newLine;
                 content += "public class " + className + "Controller extends BaseSpringController {" + newLine;
                 content += newLine;
+                content += "    @Autowired" + newLine;
+                content += "    private " + className + "Manager " + fieldName + "Manager;" + newLine;
                 content += "    /**" + newLine;
-                content += "     * you must write desc here..." + newLine;
+                content += "     * 查询数据" + newLine;
                 content += "     */" + newLine;
             } else if (annotationType == 1) {
                 content += "@Controller" + newLine;
@@ -186,12 +191,16 @@ public class CodeUtil {
                 content += newLine;
                 content += "public class " + className + "Controller extends BaseSpringController {" + newLine;
                 content += newLine;
-                content += "    @RequestMapping(value = \"/function.do\")" + newLine;
-                content += "    @ApiOperation(value = \"方法说明使用\", httpMethod = \"GET\", response = ResponseJson.class)" + newLine;
+                content += "    @Autowired" + newLine;
+                content += "    private " + className + "Manager " + fieldName + "Manager;" + newLine;
+                content += newLine;
+                content += "    @RequestMapping(value = \"/listData.do\")" + newLine;
+                content += "    @ApiOperation(value = \"查询数据\", httpMethod = \"GET\", response = ResponseJson.class)" + newLine;
             }
-            content += "    public void test(HttpServletRequest request, HttpServletResponse response) {" + newLine;
+            content += "    public void listData(HttpServletRequest request, HttpServletResponse response, " + className + " query) {" + newLine;
             content += "        try {" + newLine;
-            content += "            ResponseJson.writeSuccess(response);" + newLine;
+            content += "            List<" + className + "> list = " + fieldName + "Manager.listData(query);" + newLine;
+            content += "            ResponseJson.writeSuccess(response, list);" + newLine;
             content += "        } catch (Exception e) {" + newLine;
             content += "            e.printStackTrace();" + newLine;
             content += "            ResponseJson.writeError(response);" + newLine;
@@ -224,6 +233,8 @@ public class CodeUtil {
             content += "import javacommon.base.EntityDao;" + newLine;
             content += "import org.springframework.beans.factory.annotation.Autowired;" + newLine;
             content += "import org.springframework.stereotype.Service;" + newLine;
+            content += newLine;
+            content += "import java.util.List;" + newLine;
             content += newLine;
             content += "/**" + newLine;
             content += " * Created by " + author + " on " + util.formatDate(new Date(), util.FORMAT_FULL) + "." + newLine;
@@ -296,7 +307,7 @@ public class CodeUtil {
                 content += "\" + " + newLine;
             }
             content += "               \" ) from " + className + " t\";" + newLine;
-            content += "        List list = findAllByHqlAndValueBean(hql.toString(), query);" + newLine;
+            content += "        List list = findAllByHqlAndValueBean(hql, query);" + newLine;
             content += "        return RequestUtil.parseListToList(list, " + className + ".class);" + newLine;
             content += "    }" + newLine;
 

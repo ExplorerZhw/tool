@@ -211,8 +211,10 @@ public class MainController {
             flag = new TabTwoService().createCode(codeUtil, selectedNameSet, classTypes, authorStr, annotationType, path);
         }
         if (flag) {
-            frameUtil.alertInfo("", "创建成功！");
-            fileUtil.openFilePath(path);
+            boolean isOk = frameUtil.alertConfirm("创建成功", "是否打开文件所在文件架？");
+            if (isOk) {
+                fileUtil.openFilePath(path);
+            }
         } else {
             frameUtil.alertInfo("", "创建失败！");
         }
